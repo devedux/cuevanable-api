@@ -1,0 +1,32 @@
+version: "3"
+services:
+  db:
+    image: postgres:alpine
+    volumes:
+      - ddl_db:/var/lib/postgresql/data:delegated
+    ports:
+      - 54320:5432
+    environment:
+      POSTGRES_PASSWORD: codeable
+  client:
+    image: codeableorg/ror:latest
+    command: "bash -c 'while true; do sleep 1; done'"
+    volumes:
+      - .:/app:delegated
+      - tmp:/app/tmp:delegated
+      - bundle:/usr/local/bundle:delegated
+      - ssh:/root/.ssh:delegated
+    ports:
+      - 3000:3000
+    environment:
+      GIT_USER_NAME: "${GIT_USER_NAME}"
+      GIT_USER_EMAIL: "${GIT_USER_EMAIL}"
+      PGPASSWORD: codeable
+    depends_on:
+      - db
+volumes:
+  ddl_db:
+  tmp:
+  bundle:
+  ssh:
+    external: true
