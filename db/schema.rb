@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_233917) do
+ActiveRecord::Schema.define(version: 2021_10_05_234824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "genres_movies", id: false, force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "genre_id", null: false
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "summary", null: false
+    t.bigint "professional_id"
+    t.bigint "parent_id"
+    t.integer "duration", null: false
+    t.integer "category", default: 0
+    t.date "release_date", null: false
+    t.integer "likes_count", default: 0
+    t.integer "dislikes_count", default: 0
+    t.integer "votes_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["parent_id"], name: "index_movies_on_parent_id"
+    t.index ["professional_id"], name: "index_movies_on_professional_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
@@ -26,4 +54,5 @@ ActiveRecord::Schema.define(version: 2021_10_05_233917) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "movies", "users", column: "professional_id"
 end
