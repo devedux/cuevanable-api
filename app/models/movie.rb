@@ -16,6 +16,8 @@ class Movie < ApplicationRecord
   has_and_belongs_to_many :genres
   has_and_belongs_to_many :professionals, join_table: 'movies_users', class_name: 'User'
 
+  has_one_attached :cover
+
   # validations
   validates :duration, presence: true
   validates :duration, numericality: { only_integer: true }

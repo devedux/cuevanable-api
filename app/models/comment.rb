@@ -18,6 +18,8 @@ class Comment < ApplicationRecord
 
   validate :set_tweet_or_reply_category
 
+  private
+
   def set_tweet_or_reply_category
     self.category = if replied_to.present?
                       0

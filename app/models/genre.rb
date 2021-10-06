@@ -4,5 +4,5 @@ class Genre < ApplicationRecord
 
   # Validations
   validates :name, presence: true
-  validates :name, length: { minimun: 5 }
+  validates :name, length: { minimum: 5 }
 end

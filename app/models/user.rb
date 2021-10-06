@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :emotions, dependent: :destroy
   has_many :comments_emotions, through: :emotions, source: :emotionable, source_type: 'Comment'
-  has_many movies_emotions, through: :emotions, source: :emotionable, source_type: 'Movie'
+  has_many :movies_emotions, through: :emotions, source: :emotionable, source_type: 'Movie'
 
   has_and_belongs_to_many :movies, join_table: 'movies_users', class_name: 'Movie'
 

@@ -13,6 +13,8 @@ class Emotion < ApplicationRecord
   before_save :increase_counter_cache
   before_destroy :decrease_counter_cache
 
+  private
+
   def increase_counter_cache
     emotionable = get_emotionable
 
