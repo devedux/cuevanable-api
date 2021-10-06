@@ -1,24 +1,52 @@
-# README
+# Cuevanable API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version
 
-Things you may want to cover:
+v2.7.3
 
-* Ruby version
+## Dependencies
 
-* System dependencies
+- rails
+- pg
+- bcrypt
+- rack-cors
 
-* Configuration
+## Get started
 
-* Database creation
+```bash
+rails db.create
+```
 
-* Database initialization
+```bash
+rails db:seed
+```
 
-* How to run the test suite
+```bash
+rails s -b 0.0.0.0
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Seed data
 
-* Deployment instructions
+### User
 
-* ...
+| email             | password |
+| ----------------- | -------- |
+| cuevana@gmail.com | 123456   |
+
+## Cuevanable
+
+```bash
+
+```
+
+### Movies
+
+```bash
+
+```
+
+## Available endpoints
+
+```bash
+ ...
+```
