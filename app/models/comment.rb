@@ -14,7 +14,7 @@ class Comment < ApplicationRecord
 
   # Validations
   validates :body, presence: true
-  validates :body, length: { maximun: 150 }
+  validates :body, length: { maximum: 150 }
 
   validate :set_tweet_or_reply_category
 
