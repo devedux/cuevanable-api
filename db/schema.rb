@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_234824) do
+ActiveRecord::Schema.define(version: 2021_10_06_000630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.bigint "replied_to_id"
+    t.integer "category"
+    t.integer "replies_count", default: 0
+    t.integer "likes_count", default: 0
+    t.integer "dislikes_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_comments_on_movie_id"
+    t.index ["replied_to_id"], name: "index_comments_on_replied_to_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "emotions", force: :cascade do |t|
+    t.string "emotionable_type", null: false
+    t.bigint "emotionable_id", null: false
+    t.integer "category", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["emotionable_type", "emotionable_id"], name: "index_emotions_on_emotionable"
+    t.index ["user_id"], name: "index_emotions_on_user_id"
+  end
 
   create_table "genres", force: :cascade do |t|
     t.string "name"
@@ -39,8 +66,14 @@ ActiveRecord::Schema.define(version: 2021_10_05_234824) do
     t.integer "votes_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "comments_count", default: 0
     t.index ["parent_id"], name: "index_movies_on_parent_id"
     t.index ["professional_id"], name: "index_movies_on_professional_id"
+  end
+
+  create_table "movies_users", id: false, force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,5 +87,21 @@ ActiveRecord::Schema.define(version: 2021_10_05_234824) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "movie_id", null: false
+    t.integer "stars_value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_votes_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_votes_on_user_id_and_movie_id", unique: true
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  add_foreign_key "comments", "movies"
+  add_foreign_key "comments", "users"
+  add_foreign_key "emotions", "users"
   add_foreign_key "movies", "users", column: "professional_id"
+  add_foreign_key "votes", "movies"
+  add_foreign_key "votes", "users"
 end
