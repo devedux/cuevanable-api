@@ -4,7 +4,13 @@ class Comment < ApplicationRecord
 
   # Associations
   belongs_to :user
-  belongs_to :movie
+  belongs_to :movie, counter_cache: true
+  belongs_to :replied_to, counter_cache: :replies_count, class_name: 'Comment', optional: true
+
+  has_many :replies, class_name: 'Comment', foreign_key: 'replied_to_id', dependent: :nullify,
+                     inverse_of: 'replied_to'
+  has_many :emotions, as: :emotionable, dependent: :destroy
+  has_many :users_emotions, through: :emotions, source: :user
 
   # Validations
   validates :body, presence: true
