@@ -36,13 +36,13 @@ rails s -b 0.0.0.0
 ## Cuevanable
 
 ```bash
-
+...
 ```
 
 ### Movies
 
 ```bash
-
+...
 ```
 
 ## Available endpoints
